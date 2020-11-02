@@ -5,14 +5,16 @@
 #include <iomanip>
 #include <optional>
 
-static constexpr auto width = 32;
-static constexpr auto height = 18;
+static constexpr auto width = 48;
+static constexpr auto height = 16;
 
 float plot_f[width * height];
 
 
 void Plot::draw()
 {
+   std::cout << _func._name << ":" << std::endl;
+
    for (auto y = 0; y < height; y++)
    {
       std::cout << "|";
@@ -31,7 +33,7 @@ void Plot::draw()
       std::cout << "-";
    }
 
-   std::cout << std::endl;
+   std::cout << std::endl << std::endl;
 }
 
 
@@ -93,8 +95,10 @@ void bresenham(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
 }
 
 
-void Plot::update(std::function<float(float)> func)
+void Plot::update(const Plot::Function& func)
 {
+   _func = func;
+
    memset(plot_f, 0, width * height * sizeof(float));
 
    std::optional<int32_t> px;
@@ -103,7 +107,7 @@ void Plot::update(std::function<float(float)> func)
    for (auto x_scaled = 0; x_scaled < width; x_scaled++)
    {
       const auto x = x_scaled / static_cast<float>(width);
-      const auto y = func(x);
+      const auto y = func._func(x);
       const auto y_scaled = height - y * height;
 
       if (px.has_value())

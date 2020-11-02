@@ -3,8 +3,15 @@
 #include <cstdint>
 #include <functional>
 
-namespace Plot
+struct Plot
 {
-void update(std::function<float(float)> func);
-void draw();
-}
+   struct Function{
+      std::function<float(float)> _func;
+      std::string _name;
+   };
+
+   void update(const Function& func);
+   void draw();
+
+   Function _func;
+};
