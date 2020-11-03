@@ -6,9 +6,6 @@
 #include <utility>
 
 
-// https://easings.net/#
-
-
 namespace Easings
 {
 
@@ -26,7 +23,7 @@ bool fuzzyCompare(T x, T y)
 template<class T>
 constexpr auto easeInSine(T x)
 {
-   return static_cast<T>(1.0 - cos((x * M_PI) / 2.0));
+   return static_cast<T>(1 - cos((x * M_PI) / 2));
 }
 
 template<class T>
@@ -44,22 +41,24 @@ constexpr auto easeInQuint(T x)
 template<class T>
 constexpr auto easeInCirc(T x)
 {
-   return static_cast<T>(1.0 - sqrt(1.0 - pow(x, 2.0)));
+   return static_cast<T>(1 - sqrt(1 - (x * x)));
 }
 
 template<class T>
 constexpr auto easeInElastic(T x)
 {
-   constexpr auto c4 = (2 * M_PI) / 3;
+   if (fuzzyCompare(x, T{0}))
+   {
+      return T{0};
+   }
 
-   return
-      static_cast<T>(
-         fuzzyCompare(x, T{0.0})
-            ? 0.0
-            : fuzzyCompare(x, T{1.0})
-               ? 1.0
-               : (-pow(2.0, 10.0 * x - 10.0) * sin((x * 10.0 - 10.75) * c4))
-      );
+   if (fuzzyCompare(x, T{1}))
+   {
+      return T{1};
+   }
+
+   constexpr auto c4 = (2 * M_PI) / 3;
+   return static_cast<T>((-pow(2, 10 * x - 10) * sin((x * 10 - 10.75) * c4)));
 }
 
 
@@ -67,39 +66,48 @@ constexpr auto easeInElastic(T x)
 template<class T>
 constexpr auto easeOutSine(T x)
 {
-   return static_cast<T>(sin((x * M_PI) * 0.5));
+   return static_cast<T>(sin((x * M_PI) / 2));
 }
 
 template<class T>
 constexpr auto easeOutCubic(T x)
 {
-   return static_cast<T>(1.0 - pow(1.0 - x, 3.0));
+   const auto c1 = 1 - x;
+   const auto c2 = c1 * c1 * c1;
+   return 1 - c2;
 }
 
 template<class T>
 constexpr auto easeOutQuint(T x)
 {
-   return static_cast<T>(1.0 - pow(1.0 - x, 5.0));
+   const auto c1 = 1 - x;
+   const auto c2 = c1 * c1 * c1 * c1 * c1;
+   return 1 - c2;
 }
 
 template<class T>
 constexpr auto easeOutCirc(T x)
 {
-   return static_cast<T>(sqrt(1.0 - pow(x - 1.0, 2.0)));
+   const auto c1 = x - 1;
+   const auto c2 = c1 * c1;
+   return static_cast<T>(sqrt(1 - c2));
 }
 
 template<class T>
 constexpr auto easeOutElastic(T x)
 {
-   constexpr auto c4 = (2.0 * M_PI) / 3.0;
+   if (fuzzyCompare(x, T{0}))
+   {
+      return T{0};
+   }
 
-   return static_cast<T>(
-      fuzzyCompare(x, T{0.0})
-         ? 0.0
-         : fuzzyCompare(x, T{1.0})
-            ? 1.0
-            : pow(2.0, -10.0 * x) * sin((x * 10.0 - 0.75) * c4) + 1.0
-   );
+   if (fuzzyCompare(x, T{1}))
+   {
+      return T{1};
+   }
+
+   constexpr auto c4 = (2 * M_PI) / 3;
+   return static_cast<T>(pow(2, -10 * x) * sin((x * 10 - 0.75) * c4) + 1);
 }
 
 
@@ -107,37 +115,44 @@ constexpr auto easeOutElastic(T x)
 template<class T>
 constexpr auto easeInOutSine(T x)
 {
-   return static_cast<T>(-(cos(M_PI * x) - 1.0) * 0.5);
+   return static_cast<T>(-(cos(M_PI * x) - 1) / 2);
 }
 
 template<class T>
 constexpr auto easeInOutCubic(T x)
 {
-   return static_cast<T>(
-      (x < 0.5)
-         ? (4.0 * x * x * x)
-         : (1.0 - pow(-2.0 * x + 2.0, 3.0) * 0.5)
-   );
+   if (x < 0.5)
+   {
+      return 4 * x * x * x;
+   }
+
+   const auto c1 = -2 * x + 2;
+   return static_cast<T>(1 - c1 * c1 * c1 / 2);
 }
 
 template<class T>
 constexpr auto easeInOutQuint(T x)
 {
-   return static_cast<T>(
-      (x < 0.5)
-         ? (16.0 * x * x * x * x * x)
-         : (1.0 - pow(-2.0 * x + 2.0, 5.0) * 0.5)
-   );
+   if (x < 0.5)
+   {
+      return 16 * x * x * x * x * x;
+   }
+
+   const auto c1 = -2 * x + 2;
+   return (1 - c1 * c1 * c1 * c1 * c1 / 2);
 }
 
 template<class T>
 constexpr auto easeInOutCirc(T x)
 {
-   return static_cast<T>(
-      (x < 0.5)
-         ? ((1.0 - sqrt(1.0 - pow(2.0 * x, 2.0))) * 0.5)
-         : ((sqrt(1.0 - pow(-2.0 * x + 2.0, 2.0)) + 1.0) * 0.5)
-   );
+   if (x < 0.5)
+   {
+      const auto c1 = 2 * x;
+      return static_cast<T>((1 - sqrt(1 - c1 * c1)) / 2);
+   }
+
+   const auto c1 = -2 * x + 2;
+   return static_cast<T>((sqrt(1 - c1 * c1) + 1) / 2);
 }
 
 template<class T>
@@ -145,15 +160,22 @@ constexpr auto easeInOutElastic(T x)
 {
    constexpr auto c5 = (2 * M_PI) / 4.5;
 
-   return static_cast<T>(
-      fuzzyCompare(x, T{0.0})
-         ? 0.0
-         : fuzzyCompare(x, T{1.0})
-            ? 1.0
-            : (x < 0.5)
-              ? (-(pow(2.0,  20.0 * x - 10.0) * sin((20.0 * x - 11.125) * c5)) * 0.5)
-              : ( (pow(2.0, -20.0 * x + 10.0) * sin((20.0 * x - 11.125) * c5)) * 0.5 + 1.0)
-      );
+   if (fuzzyCompare(x, T{0}))
+   {
+      return T{0};
+   }
+
+   if (fuzzyCompare(x, T{1}))
+   {
+      return T{1};
+   }
+
+   if (x < 0.5)
+   {
+      return static_cast<T>(-(pow(2,  20 * x - 10) * sin((20 * x - 11.125) * c5)) / 2);
+   }
+
+   return static_cast<T>((pow(2, -20 * x + 10) * sin((20 * x - 11.125) * c5)) / 2 + 1);
 }
 
 
@@ -173,25 +195,26 @@ constexpr auto easeInQuart(T x)
 template<class T>
 constexpr auto easeInExpo(T x)
 {
-   return static_cast<T>(
-      fuzzyCompare(x, T{0.0})
-         ? 0.0
-         : pow(2.0, 10.0 * x - 10.0)
-      );
+   if (fuzzyCompare(x, T{0}))
+   {
+      return T{0};
+   }
+
+   return static_cast<T>(pow(2, 10 * x - 10));
 }
 
 template<class T>
 constexpr auto easeInBack(T x)
 {
    constexpr auto c1 = 1.70158;
-   constexpr auto c3 = c1 + 1.0;
+   constexpr auto c3 = c1 + 1;
    return static_cast<T>(c3 * x * x * x - c1 * x * x);
 }
 
 template<class T>
 constexpr auto easeInBounce(T x)
 {
-   return static_cast<T>(1.0 - easeOutBounce(1.0 - x));
+   return 1 - easeOutBounce(1 - x);
 }
 
 
@@ -201,31 +224,34 @@ template<class T>
 constexpr auto easeOutBack(T x)
 {
    constexpr auto c1 = 1.70158;
-   constexpr auto c3 = c1 + 1.0;
+   constexpr auto c3 = c1 + 1;
+   const auto c2 = x - 1;
 
-   return static_cast<T>(1.0 + c3 * pow(x - 1.0, 3.0) + c1 * pow(x - 1.0, 2.0));
+   return static_cast<T>(1 + c3 * c2 * c2 * c2 + c1 * c2 * c2);
 }
 
 template<class T>
 constexpr auto easeOutQuad(T x)
 {
-   return static_cast<T>(1.0 - (1.0 - x) * (1.0 - x));
+   return 1 - (1 - x) * (1 - x);
 }
 
 template<class T>
 constexpr auto easeOutQuart(T x)
 {
-   return static_cast<T>(1.0 - pow(1.0 - x, 4.0));
+   const auto c1 = 1 - x;
+   return 1 - c1 * c1 * c1 * c1;
 }
 
 template<class T>
 constexpr auto easeOutExpo(T x)
 {
-   return static_cast<T>(
-      fuzzyCompare(x, T{1.0})
-         ? 1.0
-         : (1.0 - pow(2.0, -10.0 * x))
-      );
+   if (fuzzyCompare(x, T{1}))
+   {
+      return T{1};
+   }
+
+   return static_cast<T>(1 - pow(2, -10 * x));
 }
 
 template<class T>
@@ -258,35 +284,46 @@ constexpr auto easeOutBounce(T x)
 template<class T>
 constexpr auto easeInOutQuad(T x)
 {
-   return static_cast<T>(
-      (x < 0.5)
-         ? (2.0 * x * x)
-         : (1.0 - pow(-2.0 * x + 2.0, 2.0) / 2.0)
-   );
+   if (x < 0.5)
+   {
+      return 2 * x * x;
+   }
+
+   const auto c1 = -2 * x + 2;
+   return 1 - c1 * c1 / 2;
 }
 
 template<class T>
 constexpr auto easeInOutQuart(T x)
 {
-   return static_cast<T>(
-      (x < 0.5)
-         ? (8.0 * x * x * x * x)
-         : (1.0 - pow(-2.0 * x + 2.0, 4.0) / 2.0)
-   );
+   if (x < 0.5)
+   {
+      return 8 * x * x * x * x;
+   }
+
+   const auto c1 = -2 * x + 2;
+   return 1 - c1 * c1 * c1 * c1 / 2;
 }
 
 template<class T>
 constexpr auto easeInOutExpo(T x)
 {
-   return static_cast<T>(
-      fuzzyCompare(x, static_cast<T>(0.0))
-         ? 0.0
-         : fuzzyCompare(x, static_cast<T>(1.0))
-            ? 1.0
-            : (x < 0.5)
-               ? (pow(2.0, 20.0 * x - 10.0) / 2.0)
-               : ((2.0 - pow(2.0, -20 * x + 10.0)) / 2.0)
-      );
+   if (fuzzyCompare(x, T{0}))
+   {
+      return T{0};
+   }
+
+   if (fuzzyCompare(x, T{1}))
+   {
+      return T{1};
+   }
+
+   if (x < 0.5)
+   {
+      return static_cast<T>(pow(2, 20 * x - 10) / 2);
+   }
+
+   return static_cast<T>((2 - pow(2, -20 * x + 10)) / 2);
 }
 
 template<class T>
@@ -295,21 +332,25 @@ constexpr auto easeInOutBack(T x)
    constexpr auto c1 = 1.70158;
    constexpr auto c2 = c1 * 1.525;
 
-   return static_cast<T>(
-      (x < 0.5)
-         ? (pow(2.0 * x, 2.0) * ((c2 + 1.0) * 2.0 * x - c2)) * 0.5
-         : (pow(2.0 * x - 2.0, 2.0) * ((c2 + 1.0) * (x * 2.0 - 2.0) + c2) + 2.0) * 0.5
-   );
+   if (x < 0.5)
+   {
+      const auto c3 = 2 * x;
+      return static_cast<T>((c3 * c3 * ((c2 + 1.0) * 2.0 * x - c2)) / 2);
+   }
+
+   const auto c3 = 2 * x - 2;
+   return static_cast<T>((c3 * c3 * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2);
 }
 
 template<class T>
 constexpr auto easeInOutBounce(T x)
 {
-   return static_cast<T>(
-      (x < 0.5)
-         ? (1.0 - easeOutBounce(1.0 - 2.0 * x)) / 2.0
-         : (1.0 + easeOutBounce(2.0 * x - 1.0)) / 2.0
-   );
+   if (x < 0.5)
+   {
+      return static_cast<T>((1 - easeOutBounce(1 - 2 * x)) / 2);
+   }
+
+   return static_cast<T>((1 + easeOutBounce(2 * x - 1)) / 2);
 }
 
 }
