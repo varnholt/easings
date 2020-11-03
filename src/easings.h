@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <limits>
 #include <math.h>
 #include <type_traits>
@@ -23,7 +24,7 @@ bool fuzzyCompare(T x, T y)
 template<class T>
 constexpr auto easeInSine(T x)
 {
-   return static_cast<T>(1 - cos((x * M_PI) / 2));
+   return static_cast<T>(1 - std::cos((x * M_PI) / 2));
 }
 
 template<class T>
@@ -58,7 +59,7 @@ constexpr auto easeInElastic(T x)
    }
 
    constexpr auto c4 = (2 * M_PI) / 3;
-   return static_cast<T>((-pow(2, 10 * x - 10) * sin((x * 10 - 10.75) * c4)));
+   return static_cast<T>((-std::pow(2, 10 * x - 10) * std::sin((x * 10 - 10.75) * c4)));
 }
 
 
@@ -66,7 +67,7 @@ constexpr auto easeInElastic(T x)
 template<class T>
 constexpr auto easeOutSine(T x)
 {
-   return static_cast<T>(sin((x * M_PI) / 2));
+   return static_cast<T>(std::sin((x * M_PI) / 2));
 }
 
 template<class T>
@@ -107,7 +108,7 @@ constexpr auto easeOutElastic(T x)
    }
 
    constexpr auto c4 = (2 * M_PI) / 3;
-   return static_cast<T>(pow(2, -10 * x) * sin((x * 10 - 0.75) * c4) + 1);
+   return static_cast<T>(std::pow(2, -10 * x) * std::sin((x * 10 - 0.75) * c4) + 1);
 }
 
 
@@ -115,7 +116,7 @@ constexpr auto easeOutElastic(T x)
 template<class T>
 constexpr auto easeInOutSine(T x)
 {
-   return static_cast<T>(-(cos(M_PI * x) - 1) / 2);
+   return static_cast<T>(-(std::cos(M_PI * x) - 1) / 2);
 }
 
 template<class T>
@@ -172,10 +173,10 @@ constexpr auto easeInOutElastic(T x)
 
    if (x < 0.5)
    {
-      return static_cast<T>(-(pow(2,  20 * x - 10) * sin((20 * x - 11.125) * c5)) / 2);
+      return static_cast<T>(-(std::pow(2,  20 * x - 10) * std::sin((20 * x - 11.125) * c5)) / 2);
    }
 
-   return static_cast<T>((pow(2, -20 * x + 10) * sin((20 * x - 11.125) * c5)) / 2 + 1);
+   return static_cast<T>((std::pow(2, -20 * x + 10) * std::sin((20 * x - 11.125) * c5)) / 2 + 1);
 }
 
 
@@ -200,7 +201,7 @@ constexpr auto easeInExpo(T x)
       return T{0};
    }
 
-   return static_cast<T>(pow(2, 10 * x - 10));
+   return static_cast<T>(std::pow(2, 10 * x - 10));
 }
 
 template<class T>
@@ -251,7 +252,7 @@ constexpr auto easeOutExpo(T x)
       return T{1};
    }
 
-   return static_cast<T>(1 - pow(2, -10 * x));
+   return static_cast<T>(1 - std::pow(2, -10 * x));
 }
 
 template<class T>
@@ -320,10 +321,10 @@ constexpr auto easeInOutExpo(T x)
 
    if (x < 0.5)
    {
-      return static_cast<T>(pow(2, 20 * x - 10) / 2);
+      return static_cast<T>(std::pow(2, 20 * x - 10) / 2);
    }
 
-   return static_cast<T>((2 - pow(2, -20 * x + 10)) / 2);
+   return static_cast<T>((2 - std::pow(2, -20 * x + 10)) / 2);
 }
 
 template<class T>
@@ -335,7 +336,7 @@ constexpr auto easeInOutBack(T x)
    if (x < 0.5)
    {
       const auto c3 = 2 * x;
-      return static_cast<T>((c3 * c3 * ((c2 + 1.0) * 2.0 * x - c2)) / 2);
+      return static_cast<T>((c3 * c3 * ((c2 + 1) * 2 * x - c2)) / 2);
    }
 
    const auto c3 = 2 * x - 2;
