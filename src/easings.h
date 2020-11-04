@@ -10,21 +10,11 @@
 namespace Easings
 {
 
-static constexpr auto EPSILON = std::numeric_limits<double>::epsilon();
-
-// compare with epsilon
-template<class T>
-bool fuzzyCompare(T x, T y)
-{
-   return abs(x - y) < EPSILON;
-}
-
-
 // ease in
 template<class T>
 constexpr auto easeInSine(T x)
 {
-   return static_cast<T>(1 - std::cos((x * M_PI) / 2));
+   return static_cast<T>(1 - std::cos((x * M_PI) * 0.5));
 }
 
 template<class T>
@@ -48,16 +38,6 @@ constexpr auto easeInCirc(T x)
 template<class T>
 constexpr auto easeInElastic(T x)
 {
-   if (fuzzyCompare(x, T{0}))
-   {
-      return T{0};
-   }
-
-   if (fuzzyCompare(x, T{1}))
-   {
-      return T{1};
-   }
-
    constexpr auto c4 = (2 * M_PI) / 3;
    return static_cast<T>((-std::pow(2, 10 * x - 10) * std::sin((x * 10 - 10.75) * c4)));
 }
@@ -67,7 +47,7 @@ constexpr auto easeInElastic(T x)
 template<class T>
 constexpr auto easeOutSine(T x)
 {
-   return static_cast<T>(std::sin((x * M_PI) / 2));
+   return static_cast<T>(std::sin((x * M_PI) * 0.5));
 }
 
 template<class T>
@@ -97,16 +77,6 @@ constexpr auto easeOutCirc(T x)
 template<class T>
 constexpr auto easeOutElastic(T x)
 {
-   if (fuzzyCompare(x, T{0}))
-   {
-      return T{0};
-   }
-
-   if (fuzzyCompare(x, T{1}))
-   {
-      return T{1};
-   }
-
    constexpr auto c4 = (2 * M_PI) / 3;
    return static_cast<T>(std::pow(2, -10 * x) * std::sin((x * 10 - 0.75) * c4) + 1);
 }
@@ -116,7 +86,7 @@ constexpr auto easeOutElastic(T x)
 template<class T>
 constexpr auto easeInOutSine(T x)
 {
-   return static_cast<T>(-(std::cos(M_PI * x) - 1) / 2);
+   return static_cast<T>(-(std::cos(M_PI * x) - 1) * 0.5);
 }
 
 template<class T>
@@ -128,7 +98,7 @@ constexpr auto easeInOutCubic(T x)
    }
 
    const auto c1 = -2 * x + 2;
-   return static_cast<T>(1 - c1 * c1 * c1 / 2);
+   return static_cast<T>(1 - c1 * c1 * c1 * 0.5);
 }
 
 template<class T>
@@ -140,7 +110,7 @@ constexpr auto easeInOutQuint(T x)
    }
 
    const auto c1 = -2 * x + 2;
-   return (1 - c1 * c1 * c1 * c1 * c1 / 2);
+   return (1 - c1 * c1 * c1 * c1 * c1 * T{0.5});
 }
 
 template<class T>
@@ -149,11 +119,11 @@ constexpr auto easeInOutCirc(T x)
    if (x < 0.5)
    {
       const auto c1 = 2 * x;
-      return static_cast<T>((1 - sqrt(1 - c1 * c1)) / 2);
+      return static_cast<T>((1 - sqrt(1 - c1 * c1)) * 0.5);
    }
 
    const auto c1 = -2 * x + 2;
-   return static_cast<T>((sqrt(1 - c1 * c1) + 1) / 2);
+   return static_cast<T>((sqrt(1 - c1 * c1) + 1) * 0.5);
 }
 
 template<class T>
@@ -161,19 +131,9 @@ constexpr auto easeInOutElastic(T x)
 {
    constexpr auto c5 = (2 * M_PI) / 4.5;
 
-   if (fuzzyCompare(x, T{0}))
-   {
-      return T{0};
-   }
-
-   if (fuzzyCompare(x, T{1}))
-   {
-      return T{1};
-   }
-
    if (x < 0.5)
    {
-      return static_cast<T>(-(std::pow(2,  20 * x - 10) * std::sin((20 * x - 11.125) * c5)) / 2);
+      return static_cast<T>(-(std::pow(2,  20 * x - 10) * std::sin((20 * x - 11.125) * c5)) * 0.5);
    }
 
    return static_cast<T>((std::pow(2, -20 * x + 10) * std::sin((20 * x - 11.125) * c5)) / 2 + 1);
@@ -196,11 +156,6 @@ constexpr auto easeInQuart(T x)
 template<class T>
 constexpr auto easeInExpo(T x)
 {
-   if (fuzzyCompare(x, T{0}))
-   {
-      return T{0};
-   }
-
    return static_cast<T>(std::pow(2, 10 * x - 10));
 }
 
@@ -247,11 +202,6 @@ constexpr auto easeOutQuart(T x)
 template<class T>
 constexpr auto easeOutExpo(T x)
 {
-   if (fuzzyCompare(x, T{1}))
-   {
-      return T{1};
-   }
-
    return static_cast<T>(1 - std::pow(2, -10 * x));
 }
 
@@ -309,22 +259,12 @@ constexpr auto easeInOutQuart(T x)
 template<class T>
 constexpr auto easeInOutExpo(T x)
 {
-   if (fuzzyCompare(x, T{0}))
-   {
-      return T{0};
-   }
-
-   if (fuzzyCompare(x, T{1}))
-   {
-      return T{1};
-   }
-
    if (x < 0.5)
    {
-      return static_cast<T>(std::pow(2, 20 * x - 10) / 2);
+      return static_cast<T>(std::pow(2, 20 * x - 10) * 0.5);
    }
 
-   return static_cast<T>((2 - std::pow(2, -20 * x + 10)) / 2);
+   return static_cast<T>((2 - std::pow(2, -20 * x + 10)) * 0.5);
 }
 
 template<class T>
@@ -336,11 +276,11 @@ constexpr auto easeInOutBack(T x)
    if (x < 0.5)
    {
       const auto c3 = 2 * x;
-      return static_cast<T>((c3 * c3 * ((c2 + 1) * 2 * x - c2)) / 2);
+      return static_cast<T>((c3 * c3 * ((c2 + 1) * 2 * x - c2)) * 0.5);
    }
 
    const auto c3 = 2 * x - 2;
-   return static_cast<T>((c3 * c3 * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2);
+   return static_cast<T>((c3 * c3 * ((c2 + 1) * (x * 2 - 2) + c2) + 2) * 0.5);
 }
 
 template<class T>
@@ -348,10 +288,10 @@ constexpr auto easeInOutBounce(T x)
 {
    if (x < 0.5)
    {
-      return static_cast<T>((1 - easeOutBounce(1 - 2 * x)) / 2);
+      return static_cast<T>((1 - easeOutBounce(1 - 2 * x)) * 0.5);
    }
 
-   return static_cast<T>((1 + easeOutBounce(2 * x - 1)) / 2);
+   return static_cast<T>((1 + easeOutBounce(2 * x - 1)) * 0.5);
 }
 
 }
