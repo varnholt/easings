@@ -136,7 +136,7 @@ constexpr auto easeInOutElastic(T x)
       return static_cast<T>(-(std::pow(2,  20 * x - 10) * std::sin((20 * x - 11.125) * c5)) * 0.5);
    }
 
-   return static_cast<T>((std::pow(2, -20 * x + 10) * std::sin((20 * x - 11.125) * c5)) / 2 + 1);
+   return static_cast<T>((std::pow(2, -20 * x + 10) * std::sin((20 * x - 11.125) * c5)) * 0.5 + 1);
 }
 
 
@@ -241,7 +241,7 @@ constexpr auto easeInOutQuad(T x)
    }
 
    const auto c1 = -2 * x + 2;
-   return 1 - c1 * c1 / 2;
+   return 1 - c1 * c1 * T{0.5};
 }
 
 template<class T>
@@ -253,7 +253,7 @@ constexpr auto easeInOutQuart(T x)
    }
 
    const auto c1 = -2 * x + 2;
-   return 1 - c1 * c1 * c1 * c1 / 2;
+   return 1 - c1 * c1 * c1 * c1 * T{0.5};
 }
 
 template<class T>
