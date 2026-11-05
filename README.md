@@ -1,5 +1,7 @@
 # easings
 
+[![CI](https://github.com/varnholt/easings/actions/workflows/ci.yml/badge.svg)](https://github.com/varnholt/easings/actions/workflows/ci.yml)
+
 Easing functions for C++23 in a single header, following the formulas from
 [easings.net](https://easings.net).
 
@@ -31,10 +33,32 @@ for (const auto c : easings::all_curves) { /* ... */ }
 Inputs are not clamped. The back and elastic curves deliberately go outside
 [0, 1] partway through the animation.
 
+## API
+
+Everything lives in namespace `easings`.
+
+| | |
+|---|---|
+| `T easeIn<Family>(T x)`<br>`T easeOut<Family>(T x)`<br>`T easeInOut<Family>(T x)` | one function per curve; `Family` is `Sine`, `Quad`, `Cubic`, `Quart`, `Quint`, `Expo`, `Circ`, `Back`, `Elastic` or `Bounce`; `T` is any `std::floating_point` |
+| `enum class Curve` | `InSine`, `OutSine`, `InOutSine`, ... `InOutBounce` (30 values) |
+| `T ease(Curve curve, T x)` | evaluates the selected curve; an out-of-range `Curve` value falls back to linear |
+| `std::string_view name(Curve curve)` | e.g. `"easeOutBounce"`; empty for an out-of-range value |
+| `all_curves`, `curve_count` | all `Curve` values in declaration order, e.g. to fill a combo box |
+
+## Upgrading from 1.x
+
+| 1.x | 2.x |
+|---|---|
+| `#include "easings.h"` | `#include <easings/easings.hpp>` |
+| `Easings::easeInSine<float>(x)` | `easings::easeInSine(x)` (the template argument is deduced) |
+| any arithmetic `T` | `float`, `double` or `long double` only |
+| qmake project | CMake target `easings::easings` |
+
 ## Integration
 
-The header needs C++23 (tested with GCC 13, GCC 14 and MSVC 19.51). The tests and the
-example also use `<print>`, so they need GCC 14 or newer.
+The header needs C++23. CI builds it with GCC 14, Clang 18 and MSVC; the header alone
+also works with GCC 13. The tests and the example use `<print>`, so they need GCC 14,
+Clang 18 with libstdc++ 14, or Visual Studio 2022 17.7 or newer.
 
 ### Single header
 
