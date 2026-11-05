@@ -31,10 +31,10 @@ namespace detail
 {
 
 template <std::floating_point T>
-inline constexpr T back_c1 = T{1.70158};
+inline constexpr T back_c1 = static_cast<T>(1.70158);
 
 template <std::floating_point T>
-inline constexpr T back_c2 = back_c1<T> * T{1.525};
+inline constexpr T back_c2 = back_c1<T> * static_cast<T>(1.525);
 
 template <std::floating_point T>
 inline constexpr T elastic_c4 = T{2} * std::numbers::pi_v<T> / T{3};
