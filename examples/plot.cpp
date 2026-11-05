@@ -1,10 +1,10 @@
 // Plots easing curves as ASCII art.
 //
-//   easings_plot                  plot all curves
-//   easings_plot easeOutBounce    plot the named curves only
-//   easings_plot --csv [samples]  print all curves as CSV (curve,x,y), used by tools/make_gifs.py
+//   tinyeasings_plot                  plot all curves
+//   tinyeasings_plot easeOutBounce    plot the named curves only
+//   tinyeasings_plot --csv [samples]  print all curves as CSV (curve,x,y), used by tools/make_gifs.py
 
-#include <easings/easings.hpp>
+#include <tinyeasings/tinyeasings.hpp>
 
 #include <algorithm>
 #include <array>
@@ -21,13 +21,13 @@ namespace
 constexpr int width = 60;
 constexpr int height = 18;
 
-void plot(easings::Curve curve)
+void plot(tinyeasings::Curve curve)
 {
    std::array<float, width> samples{};
    for (int column = 0; column < width; ++column)
    {
       const auto x = static_cast<float>(column) / static_cast<float>(width - 1);
-      samples[static_cast<std::size_t>(column)] = easings::ease(curve, x);
+      samples[static_cast<std::size_t>(column)] = tinyeasings::ease(curve, x);
    }
 
    // fit the y range to the curve so back/elastic overshoot stays visible
@@ -67,7 +67,7 @@ void plot(easings::Curve curve)
       }
    }
 
-   std::println("{}", easings::name(curve));
+   std::println("{}", tinyeasings::name(curve));
    for (int row = 0; row < height; ++row)
    {
       const auto label = row == to_row(1.0f) ? "1" : row == to_row(0.0f) ? "0" : " ";
@@ -79,12 +79,12 @@ void plot(easings::Curve curve)
 void print_csv(int samples)
 {
    std::println("curve,x,y");
-   for (const auto curve : easings::all_curves)
+   for (const auto curve : tinyeasings::all_curves)
    {
       for (int i = 0; i < samples; ++i)
       {
          const double x = static_cast<double>(i) / static_cast<double>(samples - 1);
-         std::println("{},{},{}", easings::name(curve), x, easings::ease(curve, x));
+         std::println("{},{},{}", tinyeasings::name(curve), x, tinyeasings::ease(curve, x));
       }
    }
 }
@@ -114,14 +114,14 @@ int main(int argc, char* argv[])
 
    if (args.empty())
    {
-      std::ranges::for_each(easings::all_curves, plot);
+      std::ranges::for_each(tinyeasings::all_curves, plot);
       return 0;
    }
 
    for (const std::string_view arg : args)
    {
-      const auto it = std::ranges::find(easings::all_curves, arg, easings::name);
-      if (it == easings::all_curves.end())
+      const auto it = std::ranges::find(tinyeasings::all_curves, arg, tinyeasings::name);
+      if (it == tinyeasings::all_curves.end())
       {
          std::println(stderr, "unknown curve: {}", arg);
          return 1;

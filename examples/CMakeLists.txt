@@ -1,2 +1,2 @@
-add_executable(easings_plot plot.cpp)
-target_link_libraries(easings_plot PRIVATE easings::easings easings_warnings)
+add_executable(tinyeasings_plot plot.cpp)
+target_link_libraries(tinyeasings_plot PRIVATE tinyeasings::tinyeasings tinyeasings_warnings)

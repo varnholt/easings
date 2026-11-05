@@ -2,7 +2,7 @@
 
 The values come from the C++ header itself, via the plot example:
 
-    easings_plot --csv > curves.csv
+    tinyeasings_plot --csv > curves.csv
     python tools/make_gifs.py curves.csv doc
 
 Each GIF shows a dot moving along a track at the eased speed, with a short
@@ -95,7 +95,7 @@ def render(name, values, font):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("csv", help="output of 'easings_plot --csv', or - for stdin")
+    parser.add_argument("csv", help="output of 'tinyeasings_plot --csv', or - for stdin")
     parser.add_argument("out_dir", type=Path, help="where to write <curve>.gif")
     args = parser.parse_args()
 

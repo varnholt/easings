@@ -1,33 +1,33 @@
-# easings
+# tinyeasings
 
-[![CI](https://github.com/varnholt/easings/actions/workflows/ci.yml/badge.svg)](https://github.com/varnholt/easings/actions/workflows/ci.yml)
+[![CI](https://github.com/varnholt/tinyeasings/actions/workflows/ci.yml/badge.svg)](https://github.com/varnholt/tinyeasings/actions/workflows/ci.yml)
 
 Easing functions for C++23 in a single header, following the formulas from
 [easings.net](https://easings.net).
 
-- one header, no dependencies: copy `include/easings/easings.hpp` into your project
+- one header, no dependencies: copy `include/tinyeasings/tinyeasings.hpp` into your project
 - or use it as a CMake library: `add_subdirectory`, `FetchContent` or `find_package`
 - `constexpr` and `noexcept`, works with `float`, `double` and `long double`
 - every curve returns exactly 0 at x = 0 and exactly 1 at x = 1
-- select a curve at runtime with the `easings::Curve` enum
+- select a curve at runtime with the `tinyeasings::Curve` enum
 
 ## Usage
 
 ```cpp
-#include <easings/easings.hpp>
+#include <tinyeasings/tinyeasings.hpp>
 
 // x is expected in [0, 1]
-const float y = easings::easeOutBounce(0.5f);
+const float y = tinyeasings::easeOutBounce(0.5f);
 
 // constant-evaluated where the math allows it
-static_assert(easings::easeInOutCubic(0.5) == 0.5);
+static_assert(tinyeasings::easeInOutCubic(0.5) == 0.5);
 
 // runtime selection, e.g. from a UI or a config file
-const auto curve = easings::Curve::InOutElastic;
-const double z = easings::ease(curve, 0.25);
-std::println("{}: {}", easings::name(curve), z);
+const auto curve = tinyeasings::Curve::InOutElastic;
+const double z = tinyeasings::ease(curve, 0.25);
+std::println("{}: {}", tinyeasings::name(curve), z);
 
-for (const auto c : easings::all_curves) { /* ... */ }
+for (const auto c : tinyeasings::all_curves) { /* ... */ }
 ```
 
 Inputs are not clamped. The back and elastic curves deliberately go outside
@@ -35,7 +35,7 @@ Inputs are not clamped. The back and elastic curves deliberately go outside
 
 ## API
 
-Everything lives in namespace `easings`.
+Everything lives in namespace `tinyeasings`.
 
 | | |
 |---|---|
@@ -53,23 +53,23 @@ Clang 18 with libstdc++ 14, or Visual Studio 2022 17.7 or newer.
 
 ### Single header
 
-Copy `include/easings/easings.hpp`, then `#include "easings.hpp"`.
+Copy `include/tinyeasings/tinyeasings.hpp`, then `#include "tinyeasings.hpp"`.
 
 ### CMake FetchContent
 
 ```cmake
 include(FetchContent)
-FetchContent_Declare(easings GIT_REPOSITORY https://github.com/varnholt/easings.git GIT_TAG main)
-FetchContent_MakeAvailable(easings)
+FetchContent_Declare(tinyeasings GIT_REPOSITORY https://github.com/varnholt/tinyeasings.git GIT_TAG main)
+FetchContent_MakeAvailable(tinyeasings)
 
-target_link_libraries(my_app PRIVATE easings::easings)
+target_link_libraries(my_app PRIVATE tinyeasings::tinyeasings)
 ```
 
 ### CMake add_subdirectory
 
 ```cmake
-add_subdirectory(external/easings)
-target_link_libraries(my_app PRIVATE easings::easings)
+add_subdirectory(external/tinyeasings)
+target_link_libraries(my_app PRIVATE tinyeasings::tinyeasings)
 ```
 
 ### Installed package
@@ -80,12 +80,12 @@ cmake --install build --prefix /some/prefix
 ```
 
 ```cmake
-find_package(easings 2 REQUIRED)
-target_link_libraries(my_app PRIVATE easings::easings)
+find_package(tinyeasings 2 REQUIRED)
+target_link_libraries(my_app PRIVATE tinyeasings::tinyeasings)
 ```
 
-The tests and the example build only when easings is the top-level project.
-Use `EASINGS_BUILD_TESTS`, `EASINGS_BUILD_EXAMPLES` and `EASINGS_INSTALL` to override that.
+The tests and the example build only when tinyeasings is the top-level project.
+Use `TINYEASINGS_BUILD_TESTS`, `TINYEASINGS_BUILD_EXAMPLES` and `TINYEASINGS_INSTALL` to override that.
 
 ## Building the tests and the plot example
 
@@ -93,7 +93,7 @@ Use `EASINGS_BUILD_TESTS`, `EASINGS_BUILD_EXAMPLES` and `EASINGS_INSTALL` to ove
 cmake -S . -B build
 cmake --build build
 ctest --test-dir build
-./build/examples/easings_plot easeOutBounce
+./build/examples/tinyeasings_plot easeOutBounce
 ```
 
 ```
@@ -140,7 +140,7 @@ speed; the small grey dot above it moves at constant speed for comparison.
 To regenerate the animations from the header (needs Pillow):
 
 ```sh
-./build/examples/easings_plot --csv > curves.csv
+./build/examples/tinyeasings_plot --csv > curves.csv
 python tools/make_gifs.py curves.csv doc
 ```
 
