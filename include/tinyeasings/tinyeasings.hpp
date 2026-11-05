@@ -1,6 +1,6 @@
-// easings.hpp - easing functions for C++23, single header
+// tinyeasings.hpp - easing functions for C++23, single header
 //
-// https://github.com/varnholt/easings
+// https://github.com/varnholt/tinyeasings
 // Formulas follow https://easings.net
 //
 // SPDX-License-Identifier: CC0-1.0
@@ -20,11 +20,11 @@
 #include <string_view>
 #include <utility>
 
-#define EASINGS_VERSION_MAJOR 2
-#define EASINGS_VERSION_MINOR 0
-#define EASINGS_VERSION_PATCH 0
+#define TINYEASINGS_VERSION_MAJOR 2
+#define TINYEASINGS_VERSION_MINOR 0
+#define TINYEASINGS_VERSION_PATCH 0
 
-namespace easings
+namespace tinyeasings
 {
 
 namespace detail
@@ -454,4 +454,4 @@ template <std::floating_point T>
    return x;
 }
 
-}  // namespace easings
+}  // namespace tinyeasings

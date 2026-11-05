@@ -1,6 +1,6 @@
-#include <easings/easings.hpp>
+#include <tinyeasings/tinyeasings.hpp>
 
 int main()
 {
-   return easings::easeOutBounce(1.0) == 1.0 ? 0 : 1;
+   return tinyeasings::easeOutBounce(1.0) == 1.0 ? 0 : 1;
 }

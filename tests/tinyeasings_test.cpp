@@ -1,4 +1,4 @@
-#include <easings/easings.hpp>
+#include <tinyeasings/tinyeasings.hpp>
 
 #include <cmath>
 #include <print>
@@ -6,7 +6,7 @@
 #include <source_location>
 #include <string_view>
 
-using namespace easings;
+using namespace tinyeasings;
 
 // compile-time checks for the curves that need no <cmath>
 static_assert(easeInQuad(0.5) == 0.25);
