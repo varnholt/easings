@@ -2,11 +2,13 @@
 //
 //   easings_plot                  plot all curves
 //   easings_plot easeOutBounce    plot the named curves only
+//   easings_plot --csv [samples]  print all curves as CSV (curve,x,y), used by tools/make_gifs.py
 
 #include <easings/easings.hpp>
 
 #include <algorithm>
 #include <array>
+#include <charconv>
 #include <cmath>
 #include <print>
 #include <span>
@@ -74,11 +76,41 @@ void plot(easings::Curve curve)
    std::println("  +{}\n", std::string(width, '-'));
 }
 
+void print_csv(int samples)
+{
+   std::println("curve,x,y");
+   for (const auto curve : easings::all_curves)
+   {
+      for (int i = 0; i < samples; ++i)
+      {
+         const double x = static_cast<double>(i) / static_cast<double>(samples - 1);
+         std::println("{},{},{}", easings::name(curve), x, easings::ease(curve, x));
+      }
+   }
+}
+
 }  // namespace
 
 int main(int argc, char* argv[])
 {
    const std::span args(argv + 1, static_cast<std::size_t>(argc - 1));
+
+   if (!args.empty() && std::string_view{args[0]} == "--csv")
+   {
+      int samples = 61;
+      if (args.size() > 1)
+      {
+         const std::string_view text{args[1]};
+         const auto [end, error] = std::from_chars(text.data(), text.data() + text.size(), samples);
+         if (error != std::errc{} || end != text.data() + text.size() || samples < 2)
+         {
+            std::println(stderr, "invalid sample count: {}", text);
+            return 1;
+         }
+      }
+      print_csv(samples);
+      return 0;
+   }
 
    if (args.empty())
    {
