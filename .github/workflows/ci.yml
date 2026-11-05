@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: gcc-14
+            os: ubuntu-24.04
+            cxx: g++-14
+          - name: clang-18
+            os: ubuntu-24.04
+            cxx: clang++-18
+          - name: msvc
+            os: windows-latest
+
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        env:
+          CXX: ${{ matrix.cxx }}
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Install and consume with find_package
+        if: runner.os == 'Linux'
+        env:
+          CXX: ${{ matrix.cxx }}
+        run: |
+          cmake --install build --prefix "$PWD/prefix"
+          cmake -S tests/package_consumer -B consumer -DCMAKE_PREFIX_PATH="$PWD/prefix"
+          cmake --build consumer
+          ./consumer/consumer
