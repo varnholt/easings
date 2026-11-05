@@ -121,18 +121,28 @@ easeOutBounce
 
 ## Curves
 
+Each curve has its graph next to an animation. The white dot moves at the eased
+speed; the small grey dot above it moves at constant speed for comparison.
+
 | | in | out | in/out |
 |---|---|---|---|
-| **Sine** | ![easeInSine](doc/0_easeInSine.png) | ![easeOutSine](doc/5_easeOutSine.png) | ![easeInOutSine](doc/10_easeInOutSine.png) |
-| **Quad** | ![easeInQuad](doc/15_easeInQuad.png) | ![easeOutQuad](doc/21_easeOutQuad.png) | ![easeInOutQuad](doc/25_easeInOutQuad.png) |
-| **Cubic** | ![easeInCubic](doc/1_easeInCubic.png) | ![easeOutCubic](doc/6_easeOutCubic.png) | ![easeInOutCubic](doc/11_easeInOutCubic.png) |
-| **Quart** | ![easeInQuart](doc/16_easeInQuart.png) | ![easeOutQuart](doc/22_easeOutQuart.png) | ![easeInOutQuart](doc/26_easeInOutQuart.png) |
-| **Quint** | ![easeInQuint](doc/2_easeInQuint.png) | ![easeOutQuint](doc/7_easeOutQuint.png) | ![easeInOutQuint](doc/12_easeInOutQuint.png) |
-| **Expo** | ![easeInExpo](doc/17_easeInExpo.png) | ![easeOutExpo](doc/23_easeOutExpo.png) | ![easeInOutExpo](doc/27_easeInOutExpo.png) |
-| **Circ** | ![easeInCirc](doc/3_easeInCirc.png) | ![easeOutCirc](doc/8_easeOutCirc.png) | ![easeInOutCirc](doc/13_easeInOutCirc.png) |
-| **Back** | ![easeInBack](doc/18_easeInBack.png) | ![easeOutBack](doc/20_easeOutBack.png) | ![easeInOutBack](doc/28_easeInOutBack.png) |
-| **Elastic** | ![easeInElastic](doc/4_easeInElastic.png) | ![easeOutElastic](doc/9_easeOutElastic.png) | ![easeInOutElastic](doc/14_easeInOutElastic.png) |
-| **Bounce** | ![easeInBounce](doc/19_easeInBounce.png) | ![easeOutBounce](doc/24_easeOutBounce.png) | ![easeInOutBounce](doc/29_easeInOutBounce.png) |
+| **Sine** | <img src="doc/0_easeInSine.png" width="120" alt="easeInSine graph"> <img src="doc/easeInSine.gif" width="120" alt="easeInSine animation"> | <img src="doc/5_easeOutSine.png" width="120" alt="easeOutSine graph"> <img src="doc/easeOutSine.gif" width="120" alt="easeOutSine animation"> | <img src="doc/10_easeInOutSine.png" width="120" alt="easeInOutSine graph"> <img src="doc/easeInOutSine.gif" width="120" alt="easeInOutSine animation"> |
+| **Quad** | <img src="doc/15_easeInQuad.png" width="120" alt="easeInQuad graph"> <img src="doc/easeInQuad.gif" width="120" alt="easeInQuad animation"> | <img src="doc/21_easeOutQuad.png" width="120" alt="easeOutQuad graph"> <img src="doc/easeOutQuad.gif" width="120" alt="easeOutQuad animation"> | <img src="doc/25_easeInOutQuad.png" width="120" alt="easeInOutQuad graph"> <img src="doc/easeInOutQuad.gif" width="120" alt="easeInOutQuad animation"> |
+| **Cubic** | <img src="doc/1_easeInCubic.png" width="120" alt="easeInCubic graph"> <img src="doc/easeInCubic.gif" width="120" alt="easeInCubic animation"> | <img src="doc/6_easeOutCubic.png" width="120" alt="easeOutCubic graph"> <img src="doc/easeOutCubic.gif" width="120" alt="easeOutCubic animation"> | <img src="doc/11_easeInOutCubic.png" width="120" alt="easeInOutCubic graph"> <img src="doc/easeInOutCubic.gif" width="120" alt="easeInOutCubic animation"> |
+| **Quart** | <img src="doc/16_easeInQuart.png" width="120" alt="easeInQuart graph"> <img src="doc/easeInQuart.gif" width="120" alt="easeInQuart animation"> | <img src="doc/22_easeOutQuart.png" width="120" alt="easeOutQuart graph"> <img src="doc/easeOutQuart.gif" width="120" alt="easeOutQuart animation"> | <img src="doc/26_easeInOutQuart.png" width="120" alt="easeInOutQuart graph"> <img src="doc/easeInOutQuart.gif" width="120" alt="easeInOutQuart animation"> |
+| **Quint** | <img src="doc/2_easeInQuint.png" width="120" alt="easeInQuint graph"> <img src="doc/easeInQuint.gif" width="120" alt="easeInQuint animation"> | <img src="doc/7_easeOutQuint.png" width="120" alt="easeOutQuint graph"> <img src="doc/easeOutQuint.gif" width="120" alt="easeOutQuint animation"> | <img src="doc/12_easeInOutQuint.png" width="120" alt="easeInOutQuint graph"> <img src="doc/easeInOutQuint.gif" width="120" alt="easeInOutQuint animation"> |
+| **Expo** | <img src="doc/17_easeInExpo.png" width="120" alt="easeInExpo graph"> <img src="doc/easeInExpo.gif" width="120" alt="easeInExpo animation"> | <img src="doc/23_easeOutExpo.png" width="120" alt="easeOutExpo graph"> <img src="doc/easeOutExpo.gif" width="120" alt="easeOutExpo animation"> | <img src="doc/27_easeInOutExpo.png" width="120" alt="easeInOutExpo graph"> <img src="doc/easeInOutExpo.gif" width="120" alt="easeInOutExpo animation"> |
+| **Circ** | <img src="doc/3_easeInCirc.png" width="120" alt="easeInCirc graph"> <img src="doc/easeInCirc.gif" width="120" alt="easeInCirc animation"> | <img src="doc/8_easeOutCirc.png" width="120" alt="easeOutCirc graph"> <img src="doc/easeOutCirc.gif" width="120" alt="easeOutCirc animation"> | <img src="doc/13_easeInOutCirc.png" width="120" alt="easeInOutCirc graph"> <img src="doc/easeInOutCirc.gif" width="120" alt="easeInOutCirc animation"> |
+| **Back** | <img src="doc/18_easeInBack.png" width="120" alt="easeInBack graph"> <img src="doc/easeInBack.gif" width="120" alt="easeInBack animation"> | <img src="doc/20_easeOutBack.png" width="120" alt="easeOutBack graph"> <img src="doc/easeOutBack.gif" width="120" alt="easeOutBack animation"> | <img src="doc/28_easeInOutBack.png" width="120" alt="easeInOutBack graph"> <img src="doc/easeInOutBack.gif" width="120" alt="easeInOutBack animation"> |
+| **Elastic** | <img src="doc/4_easeInElastic.png" width="120" alt="easeInElastic graph"> <img src="doc/easeInElastic.gif" width="120" alt="easeInElastic animation"> | <img src="doc/9_easeOutElastic.png" width="120" alt="easeOutElastic graph"> <img src="doc/easeOutElastic.gif" width="120" alt="easeOutElastic animation"> | <img src="doc/14_easeInOutElastic.png" width="120" alt="easeInOutElastic graph"> <img src="doc/easeInOutElastic.gif" width="120" alt="easeInOutElastic animation"> |
+| **Bounce** | <img src="doc/19_easeInBounce.png" width="120" alt="easeInBounce graph"> <img src="doc/easeInBounce.gif" width="120" alt="easeInBounce animation"> | <img src="doc/24_easeOutBounce.png" width="120" alt="easeOutBounce graph"> <img src="doc/easeOutBounce.gif" width="120" alt="easeOutBounce animation"> | <img src="doc/29_easeInOutBounce.png" width="120" alt="easeInOutBounce graph"> <img src="doc/easeInOutBounce.gif" width="120" alt="easeInOutBounce animation"> |
+
+To regenerate the animations from the header (needs Pillow):
+
+```sh
+./build/examples/easings_plot --csv > curves.csv
+python tools/make_gifs.py curves.csv doc
+```
 
 ## License
 
