@@ -45,15 +45,6 @@ Everything lives in namespace `easings`.
 | `std::string_view name(Curve curve)` | e.g. `"easeOutBounce"`; empty for an out-of-range value |
 | `all_curves`, `curve_count` | all `Curve` values in declaration order, e.g. to fill a combo box |
 
-## Upgrading from 1.x
-
-| 1.x | 2.x |
-|---|---|
-| `#include "easings.h"` | `#include <easings/easings.hpp>` |
-| `Easings::easeInSine<float>(x)` | `easings::easeInSine(x)` (the template argument is deduced) |
-| any arithmetic `T` | `float`, `double` or `long double` only |
-| qmake project | CMake target `easings::easings` |
-
 ## Integration
 
 The header needs C++23. CI builds it with GCC 14, Clang 18 and MSVC; the header alone
