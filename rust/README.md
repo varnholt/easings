@@ -22,7 +22,7 @@ tinyeasings = "0.1"
 
 The crate lives alongside the C++ implementation in `rust/`. To use a local checkout, replace the version with `{ path = "/path/to/tinyeasings/rust" }`.
 
-[crates.io](https://crates.io/crates/tinyeasings) · [API documentation](https://docs.rs/tinyeasings)
+[crates.io](https://crates.io/crates/tinyeasings) | [API documentation](https://docs.rs/tinyeasings)
 
 ## API
 
