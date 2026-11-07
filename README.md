@@ -144,6 +144,10 @@ To regenerate the animations from the header (needs Pillow):
 python tools/make_gifs.py curves.csv doc
 ```
 
+## Rust
+
+[`rust/`](rust/README.md) contains the native `tinyeasings` Rust crate: no dependencies and no C++ toolchain required. It includes examples, tests against the C++ implementation, and Cargo packaging. See the [Rust README](rust/README.md) for the API and local installation.
+
 ## License
 
 [CC0 1.0](LICENSE)
